@@ -2,6 +2,7 @@ import { HashRouter, Routes, Route } from 'react-router-dom';
 import pages from '@/pages';
 import Error from '@/layouts/Error';
 import { ThemeProvider } from '@/services/theme';
+import { LoadingProvider } from '@/services/loading';
 
 export const UserValidationWrapper = ({ userValidator, children }) => {
   const user = {};
@@ -46,9 +47,11 @@ export function RouterView() {
 
   return (
     <HashRouter>
-      <ThemeProvider>
-        <Routes>{appRoutesList}</Routes>
-      </ThemeProvider>
+      <LoadingProvider>
+        <ThemeProvider>
+          <Routes>{appRoutesList}</Routes>
+        </ThemeProvider>
+      </LoadingProvider>
     </HashRouter>
   );
 }

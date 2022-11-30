@@ -1,5 +1,5 @@
-import Box from '@/components/common/box';
-import Icon from '@/components/common/icon';
+import Box from '@/components/common/Box';
+import Icon from '@/components/common/Icon';
 import { useCallback } from 'react';
 import { NavLink } from 'react-router-dom';
 

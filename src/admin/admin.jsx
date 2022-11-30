@@ -1,38 +1,79 @@
-import { Outlet } from 'react-router-dom';
+import { useMemo } from 'react';
+import { Outlet, NavLink, useLocation } from 'react-router-dom';
 import routes from '@/admin/index'
 import Layout from '@/layouts/Default';
+import Button from '@/components/common/Button';
+import { useTheme } from '@/services/theme';
 
 export default function Admin() {
+  const { isDark, toggleTheme } = useTheme();
+  const { pathname } = useLocation();
+
+  const appLinks = useMemo(
+    () => {
+      const createAppLink = (linkTitle, linkIcon, linkTo) => {
+        console.log(pathname === linkTo, pathname , linkTo);
+        return {
+          linkTo,
+          linkTitle,
+          linkIcon,
+          isSelected: pathname === linkTo,
+        };
+      };
+      return [
+        createAppLink('Stores', 'storefront_black_24dp', '/admin/stores'),
+        createAppLink('Categories', 'menu_book_black_24dp', '/admin/categories'),
+        createAppLink('Foods', 'fastfood_black_24dp', '/admin/foods'),
+        createAppLink('Users', 'person_black_24dp', '/admin/users'),
+      ];
+    },
+    [location, pathname],
+  );
+
   return (
     <Layout>
-        <div class="navbar bg-base-100">
-          <div class="navbar-start">
-            <div class="dropdown">
-              <label tabindex="0" class="btn btn-ghost btn-circle">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7" /></svg>
+      <div className="flex flex-col gap-1">
+        <div className="navbar bg-base-100">
+          <div className="navbar-start">
+            <div className="dropdown">
+              <label tabindex="0" className="btn btn-ghost btn-circle">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7" /></svg>
               </label>
-              <ul tabindex="0" class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
-                <li><a>Homepage</a></li>
-                <li><a>Portfolio</a></li>
-                <li><a>About</a></li>
+              <ul tabindex="0" className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
+                <li><a>Exit</a></li>
               </ul>
             </div>
           </div>
-          <div class="navbar-center">
-            <a class="btn btn-ghost normal-case text-xl">daisyUI</a>
+          <div className="navbar-center">
+            <p className="normal-case text-xl">Admin Panel</p>
           </div>
-          <div class="navbar-end">
-            <button class="btn btn-ghost btn-circle">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
-            </button>
-            <button class="btn btn-ghost btn-circle">
-              <div class="indicator">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" /></svg>
-                <span class="badge badge-xs badge-primary indicator-item"></span>
-              </div>
-            </button>
+          <div className="navbar-end">
+            <Button
+              icon={isDark ? 'dark_mode_black_24dp' : 'light_mode_black_24dp'}
+              square
+              onClick={toggleTheme}
+              className="mx-2"
+            />
           </div>
         </div>
+        <div className='bg-base-200'>
+          <div className='flex flex-row flex-nowrap gap-2 whitespace-nowrap overflow-auto p-2'>
+            { appLinks.map((appLink) => (
+              <Button
+                key={appLink.linkTitle}
+                selected={appLink.isSelected}
+                icon={appLink.linkIcon}
+                component={NavLink}
+                to={appLink.linkTo}
+                title={appLink.linkTitle}
+                transparent
+              >
+                { appLink.linkTitle }
+              </Button>
+            ))}
+          </div>
+        </div>
+      </div>
       <Outlet />
     </Layout>
   );
