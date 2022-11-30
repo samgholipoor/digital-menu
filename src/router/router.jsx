@@ -1,6 +1,7 @@
 import { HashRouter, Routes, Route } from 'react-router-dom';
 import pages from '@/pages';
 import Error from '@/layouts/Error';
+import { ThemeProvider } from '@/services/theme';
 
 export const UserValidationWrapper = ({ userValidator, children }) => {
   const user = {};
@@ -12,10 +13,10 @@ export const UserValidationWrapper = ({ userValidator, children }) => {
   return <Error code={403} message="You Can't Access to This Page!" />;
 };
 
-export function RouterView() {
-  const appRoutesList = pages.map((Page) => {
+const generateRoutes = (p) => {
+  return p.map((Page) => {
     const {
-      routerConfig: { path, autoLogin = true, userValidator = () => true },
+      routerConfig: { path, autoLogin = true, userValidator = () => true, nestedRoutes = null },
     } = Page;
 
     const element = (
@@ -27,9 +28,13 @@ export function RouterView() {
       </UserValidationWrapper>
     );
 
-    return <Route key={path} path={path} element={element} />;
+    return <Route key={path} path={path} element={element} > {nestedRoutes && generateRoutes(nestedRoutes)} </Route>;
   });
+}
 
+export function RouterView() {
+  const appRoutesList = generateRoutes(pages)
+  
   // 404
   appRoutesList.push(
     <Route
@@ -41,7 +46,9 @@ export function RouterView() {
 
   return (
     <HashRouter>
-      <Routes>{appRoutesList}</Routes>
+      <ThemeProvider>
+        <Routes>{appRoutesList}</Routes>
+      </ThemeProvider>
     </HashRouter>
   );
 }
