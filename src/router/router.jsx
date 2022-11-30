@@ -3,6 +3,7 @@ import pages from '@/pages';
 import Error from '@/layouts/Error';
 import { ThemeProvider } from '@/services/theme';
 import { LoadingProvider } from '@/services/loading';
+import { OverlaysProvider } from '@/services/overlay';
 
 export const UserValidationWrapper = ({ userValidator, children }) => {
   const user = {};
@@ -49,7 +50,9 @@ export function RouterView() {
     <HashRouter>
       <LoadingProvider>
         <ThemeProvider>
-          <Routes>{appRoutesList}</Routes>
+          <OverlaysProvider>
+            <Routes>{appRoutesList}</Routes>
+          </OverlaysProvider>
         </ThemeProvider>
       </LoadingProvider>
     </HashRouter>

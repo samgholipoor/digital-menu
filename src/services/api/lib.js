@@ -2,6 +2,7 @@ import { API_BASE_URL } from '@/constants';
 import { useEffect, useState } from 'react';
 import { createHttpClient } from '@/utils/httpClient';
 import dynamicArgs from '@/utils/dynamicArgs';
+import { useLoading } from '@/services/loading';
 
 export const httpClient = createHttpClient(API_BASE_URL);
 
@@ -98,4 +99,39 @@ export const createApi =
     let finalPromise = sendRequest();
 
     return finalPromise.then(transformResponse);
+  };
+
+  export const useCancelablePromise = () => {
+    const [, setLoading] = useLoading();
+    const [loadingCount, setLoadingCount] = useState(0);
+    const [activePromises, setActivePromises] = useState([]);
+  
+    useEffect(() => {
+      if (loadingCount > 0) {
+        setLoading(true);
+      } else {
+        setLoading(false);
+      }
+      return () => setLoading(false);
+    }, [loadingCount]);
+  
+    useEffect(() => () => {
+      // cancel all active request on destroy
+      activePromises.forEach((promise) => {
+        if (typeof promise?.cancel === 'function') {
+          promise.cancel();
+        }
+      });
+    }, [activePromises]);
+  
+    return (apiCall, showLoading = true) => {
+      if (typeof apiCall?.finally === 'function') {
+        if (showLoading) {
+          setLoadingCount((prev) => prev + 1);
+          apiCall.finally(() => setLoadingCount((prev) => prev - 1));
+        }
+        setActivePromises((prev) => [...prev, apiCall]);
+      }
+      return apiCall;
+    };
   };

@@ -8,6 +8,6 @@ const apis = {
   ...restaurant,
 };
 
-export { httpClient, useFetch } from './lib';
+export { httpClient, useFetch, useCancelablePromise } from './lib';
 
 export default apis;

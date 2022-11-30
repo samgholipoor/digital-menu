@@ -4,6 +4,7 @@ import routes from '@/admin/index'
 import Layout from '@/layouts/Default';
 import Button from '@/components/common/Button';
 import { useTheme } from '@/services/theme';
+import Icon from '@/components/common/Icon';
 
 export default function Admin() {
   const { isDark, toggleTheme } = useTheme();
@@ -12,7 +13,6 @@ export default function Admin() {
   const appLinks = useMemo(
     () => {
       const createAppLink = (linkTitle, linkIcon, linkTo) => {
-        console.log(pathname === linkTo, pathname , linkTo);
         return {
           linkTo,
           linkTitle,
@@ -21,7 +21,7 @@ export default function Admin() {
         };
       };
       return [
-        createAppLink('Stores', 'storefront_black_24dp', '/admin/stores'),
+        createAppLink('My Store', 'storefront_black_24dp', '/admin/store'),
         createAppLink('Categories', 'menu_book_black_24dp', '/admin/categories'),
         createAppLink('Foods', 'fastfood_black_24dp', '/admin/foods'),
         createAppLink('Users', 'person_black_24dp', '/admin/users'),
@@ -32,14 +32,14 @@ export default function Admin() {
 
   return (
     <Layout>
-      <div className="flex flex-col gap-1">
-        <div className="navbar bg-base-100">
+      <div className="flex flex-col gap-1 mb-4">
+        <div className="navbar bg-base-100 rounded-md">
           <div className="navbar-start">
             <div className="dropdown">
-              <label tabindex="0" className="btn btn-ghost btn-circle">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7" /></svg>
+              <label tabIndex="0" className="btn btn-ghost btn-circle">
+                <Icon name='more_vert_black_24dp' className="w-6 mx-2" />
               </label>
-              <ul tabindex="0" className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
+              <ul tabIndex="0" className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
                 <li><a>Exit</a></li>
               </ul>
             </div>
@@ -56,7 +56,7 @@ export default function Admin() {
             />
           </div>
         </div>
-        <div className='bg-base-200'>
+        <div className='bg-base-200 rounded-md'>
           <div className='flex flex-row flex-nowrap gap-2 whitespace-nowrap overflow-auto p-2'>
             { appLinks.map((appLink) => (
               <Button

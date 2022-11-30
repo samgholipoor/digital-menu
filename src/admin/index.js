@@ -1,6 +1,6 @@
 import Categories from '@/admin/categories';
 import Foods from '@/admin/foods';
 import Users from '@/admin/users';
-import Stores from '@/admin/stores';
+import Store from '@/admin/store';
 
-export default [Categories, Foods, Users, Stores];
+export default [Categories, Foods, Users, Store];
