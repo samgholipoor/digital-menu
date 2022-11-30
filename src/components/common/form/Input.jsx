@@ -59,7 +59,7 @@ export default function Input({
         onBlur={clearEmptyLinesIfNeeded}
         placeholder={placeholder || label}
         className={mergeClassNames(
-          'block bg-base-100 dark:bg-base-300 bg-opacity-20 focus:bg-opacity-100 focus:bg-base-100 w-full px-3 border border-base-200 rounded text-base focus:border-primary duration-150 transition-colors',
+          'input input-bordered block bg-base-100 dark:bg-base-300 bg-opacity-20 focus:bg-opacity-100 focus:bg-base-100 w-full px-3 rounded text-base duration-150 transition-colors',
           multiline && 'py-2 h-40 min-h-16 max-h-96',
           !multiline && 'h-10',
         )}
