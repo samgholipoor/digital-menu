@@ -79,9 +79,6 @@ export default function Admin() {
   );
 }
 
-
-
-
 Admin.routerConfig = {
   type: 'page',
   path: '/admin',
