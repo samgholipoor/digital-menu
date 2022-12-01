@@ -32,19 +32,22 @@ export default function Stores() {
         >
           <div className="p-2 flex flex-wrap">
             <div className="w-full lg:w-1/3 p-2">
-              <Input name="package_name" label='test' validator={(v) => !!v} />
+              <Input name="store_name" label='Store Name' />
             </div>
             <div className="w-full lg:w-1/3 p-2">
-              <Input name="name" label='test2' validator={(v) => !!v} />
+              <Input name="owner_name" label='Owner Name' />
             </div>
             <div className="w-full lg:w-1/3 p-2">
-              <Input name="slug" label='test3' />
+              <Input name="store_tel" label='Store Phone Number' />
             </div>
-            <div className="w-full lg:w-2/3 p-2">
-              <Input name="short_description" label='test4' />
+            <div className="w-full lg:w-1/3 p-2">
+              <Input name="store_id" label='Store Id' />
             </div>
-            <div className="w-full md:w-1/3 p-2">
-              <Input name="age_limit" label='test4' formatter={(x) => Number(x)} validator={(x) => (x > -1 && x < 99) || 'Age must be a number between 0 to 99'} />
+            <div className="w-full lg:w-1/3 p-2">
+              <Input name="store_rate" label='Store Rate' />
+            </div>
+            <div className="w-full p-2">
+              <Input name="store_address" label='Store Address' multiline />
             </div>
           </div>
           <FormButtons
