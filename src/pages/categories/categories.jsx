@@ -11,13 +11,16 @@ export default function Categories() {
     [],
   );
 
-  console.log(categories);
-
   return (
     <div>
-      {/* {list?.map((category) => (
-        <Cart key={category.id} {...category} />
-      ))} */}
+      {categories?.map((category) => (
+        <Cart 
+          key={category.id}
+          title={category.category_name}
+          description={category.category_description}
+          image={category.category_image}
+        />
+      ))}
     </div>
   );
 }
