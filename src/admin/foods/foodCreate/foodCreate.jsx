@@ -7,17 +7,25 @@ import {
 import { Form, FormButtons } from '@/components/common/form/Form';
 import Input from '@/components/common/form/Input';
 import File from '@/components/common/form/File';
+import Select from '@/components/common/form/Select';
 import { actionButton } from '@/components/common/ActionButtons';
 import Box from '@/components/common/Box';
 
-export default function CategoryCreate({
+export default function FoodCreate({
+  categories,
   onClose,
   onReloadRequest,
 }) {
   const [formData, setFormData] = useState({});
 
+  const categoryOptions = useMemo(() => (
+    categories.map((cat) => ({title: cat.category_name, value: cat._id}))
+  ), [categories]);
+
   const formAction = useCallback((formData) => {
-    return api.addCategory(formData)
+    const selectedCat = categoryOptions.filter((cat) => cat.value === formData.category_id)[0]
+    const formatedData = { ...formData, category_name: selectedCat.title }
+    return api.addFood(formatedData)
   },[]);
 
   const handleSuccess = useCallback(() => {
@@ -40,23 +48,31 @@ export default function CategoryCreate({
   ], [handleSuccess, onClose]);
 
   return (
-    <Box header='Create Category'>
+    <Box header='Submit Food'>
       <Form
         value={formData}
         onChange={setFormData}
         action={formAction}
         onSuccess={handleSuccess}
       > 
-        <div className='flex '>
+        <div className='flex'>
           <div className="md:w-1/2 p-4">
-            <Input name="category_name" label='Category Name' />
+            <Input name="food_name" label='Food Name' />
           </div>
           <div className="md:w-1/2 p-4">
-            <Input name="category_description" label='Category Description' />
+            <Input name="food_description" label='Food Description' />
+          </div>
+        </div>
+        <div className="flex">
+          <div className="md:w-1/2 p-4">
+            <Input name="food_price" label="Food Price" />
+          </div>
+          <div className="md:w-1/2 p-4">
+            <Select name="category_id" label="Category" options={categoryOptions} />
           </div>
         </div>
         <div className="p-4">
-          <File name="category_image" label='Category Image' />
+          <File name="food_image" label='Food Image' />
         </div>
         <FormButtons
           className="p-4"
@@ -67,7 +83,7 @@ export default function CategoryCreate({
   );
 }
 
-CategoryCreate.defaultProps = {
+FoodCreate.defaultProps = {
   releases: [],
   onClose: () => {},
   onReloadRequest: () => {},

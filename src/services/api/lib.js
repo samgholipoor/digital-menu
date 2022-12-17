@@ -1,10 +1,13 @@
-import { API_BASE_URL } from '@/constants';
+import { USER_LOCAL_STORAGE_KEY, API_BASE_URL } from '@/constants';
 import { useEffect, useState } from 'react';
 import { createHttpClient } from '@/utils/httpClient';
 import dynamicArgs from '@/utils/dynamicArgs';
 import { useLoading } from '@/services/loading';
+import { getFromStorage } from '@/utils/storage';
 
-export const httpClient = createHttpClient(API_BASE_URL);
+export const httpClient = createHttpClient(API_BASE_URL, {
+  'Authorization': getFromStorage(USER_LOCAL_STORAGE_KEY)?.accessToken
+});
 
 export const useFetch = (request, defaultValue, dependencies = []) => {
   const [data, setData] = useState(defaultValue);
@@ -92,6 +95,7 @@ export const createApi =
         headers: {
           ...headers,
           ...(contentType && { 'content-type': contentType }),
+          'Authorization': getFromStorage(USER_LOCAL_STORAGE_KEY)?.accessToken
         },
         body,
       });

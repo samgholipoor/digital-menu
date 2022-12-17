@@ -8,6 +8,7 @@ const apis = {
   ...foods,
   ...restaurant,
   ...store,
+  ...foods,
 };
 
 export { httpClient, useFetch, useCancelablePromise } from './lib';

@@ -24,7 +24,6 @@ export default function Admin() {
         createAppLink('My Store', 'storefront_black_24dp', '/admin/store'),
         createAppLink('Categories', 'menu_book_black_24dp', '/admin/categories'),
         createAppLink('Foods', 'fastfood_black_24dp', '/admin/foods'),
-        createAppLink('Users', 'person_black_24dp', '/admin/users'),
       ];
     },
     [location, pathname],

@@ -4,5 +4,6 @@ import Foods from '@/pages/foods';
 import Home from '@/pages/home';
 import Scan from '@/pages/scan';
 import Form from '@/pages/form';
+import Login from '@/pages/login'
 
-export default [Admin, Categories, Form, Foods, Home, Scan];
+export default [Login, Admin, Categories, Form, Foods, Home, Scan];
