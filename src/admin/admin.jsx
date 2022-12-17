@@ -1,14 +1,17 @@
 import { useMemo } from 'react';
-import { Outlet, NavLink, useLocation } from 'react-router-dom';
+import { Outlet, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import routes from '@/admin/index'
 import Layout from '@/layouts/Default';
 import Button from '@/components/common/Button';
 import { useTheme } from '@/services/theme';
-import Icon from '@/components/common/Icon';
+import { removeFromStorage } from '@/utils/storage';
+import { USER_LOCAL_STORAGE_KEY } from '@/constants';
+import { generateUrl } from '@/utils/url';
 
 export default function Admin() {
   const { isDark, toggleTheme } = useTheme();
   const { pathname } = useLocation();
+  const navigate = useNavigate();
 
   const appLinks = useMemo(
     () => {
@@ -29,28 +32,31 @@ export default function Admin() {
     [location, pathname],
   );
 
+  const logout = () => {
+    removeFromStorage(USER_LOCAL_STORAGE_KEY);
+    navigate('/login');
+  };
+
   return (
     <Layout>
       <div className="flex flex-col gap-1 mb-4">
         <div className="navbar bg-base-100 rounded-md">
           <div className="navbar-start">
-            <div className="dropdown">
-              <label tabIndex="0" className="btn btn-ghost btn-circle">
-                <Icon name='more_vert_black_24dp' className="w-6 mx-2" />
-              </label>
-              <ul tabIndex="0" className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
-                <li><a>Exit</a></li>
-              </ul>
-            </div>
+            <Button
+              icon={isDark ? 'dark_mode_black_24dp' : 'light_mode_black_24dp'}
+              square
+              onClick={toggleTheme}
+              className="mx-2"
+            />
           </div>
           <div className="navbar-center">
             <p className="normal-case text-xl">Admin Panel</p>
           </div>
           <div className="navbar-end">
             <Button
-              icon={isDark ? 'dark_mode_black_24dp' : 'light_mode_black_24dp'}
+              icon='logout_black_24dp'
               square
-              onClick={toggleTheme}
+              onClick={logout}
               className="mx-2"
             />
           </div>
