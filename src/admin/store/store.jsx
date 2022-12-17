@@ -1,4 +1,5 @@
 import { useState, useMemo, useCallback, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import Box from '@/components/common/Box';
 import Button from '@/components/common/Button';
 import { Form, FormButtons } from '@/components/common/form/Form';
@@ -20,11 +21,18 @@ export default function Stores() {
   });
   const [showQR, setShowQR] = useState(false);
   const { showToast } = useOverlay();
+  const navigate = useNavigate();
   const [store, , reload] = useFetch(
     () => apis.getStore(),
     [],
     [],
   );
+
+  useEffect(() => {
+   if(store._id){
+    navigate(`/admin/store/${store._id}`);
+   }   
+  }, [store])
   
   useEffect(() => {
     if(store){
@@ -40,7 +48,7 @@ export default function Stores() {
     if (store._id){
       return apis.updateStore(store._id, formsData);  
     }
-    return apis.addStore(formsData);
+    return apis.addStore(formsData).then(() => reload());
   }, [store]);
 
   const handleSuccess = useCallback(() => {
@@ -105,5 +113,5 @@ export default function Stores() {
 
 Stores.routerConfig = {
   type: 'page',
-  path: 'store',
+  path: 'store/:store_id',
 };

@@ -10,12 +10,14 @@ import File from '@/components/common/form/File';
 import Select from '@/components/common/form/Select';
 import { actionButton } from '@/components/common/ActionButtons';
 import Box from '@/components/common/Box';
+import { useParams } from 'react-router-dom';
 
 export default function FoodCreate({
   categories,
   onClose,
   onReloadRequest,
 }) {
+  const { store_id } = useParams();
   const [formData, setFormData] = useState({});
 
   const categoryOptions = useMemo(() => (
@@ -25,7 +27,7 @@ export default function FoodCreate({
   const formAction = useCallback((formData) => {
     const selectedCat = categoryOptions.filter((cat) => cat.value === formData.category_id)[0]
     const formatedData = { ...formData, category_name: selectedCat.title }
-    return api.addFood(formatedData)
+    return api.addFood(store_id, formatedData)
   },[]);
 
   const handleSuccess = useCallback(() => {

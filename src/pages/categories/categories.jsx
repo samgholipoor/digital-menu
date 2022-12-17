@@ -1,34 +1,23 @@
 import apis, { useFetch } from '@/services/api';
-import { useEffect } from 'react';
 import Cart from '@/components/common/cart';
+import { useParams } from "react-router-dom";
 
 export default function Categories() {
-  const restaurantId = 3;
-  const [list] = useFetch(
-    () => apis.getCategories({ restaurantId: restaurantId }),
+  const { restaurantId } = useParams();
+  
+  const [categories] = useFetch(
+    () => apis.getStoreCategories(restaurantId),
     [],
     [],
   );
 
-  useEffect(() => {
-    console.log(list);
-  }, [list]);
-
-  const handleClick = () => {
-    apis.addCategory({
-      title: 'دسر',
-      description: 'دسر',
-      image: 'https://picsum.photos/200/300',
-      restaurantId,
-    });
-  };
+  console.log(categories);
 
   return (
     <div>
-      <button onClick={handleClick}> click me </button>
-      {list?.map((category) => (
+      {/* {list?.map((category) => (
         <Cart key={category.id} {...category} />
-      ))}
+      ))} */}
     </div>
   );
 }

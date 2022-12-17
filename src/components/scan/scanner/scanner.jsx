@@ -1,25 +1,27 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { QrReader } from 'react-qr-reader';
 
-const QrCodeReader = ({ data, setData, props }) => {
+const QrCodeReader = ({ setData, onError, props }) => {
+  
   return (
-    <>
-      <QrReader
-        onResult={(result, error) => {
-          if (!!result) {
-            setData(result?.text);
-          }
+    <QrReader
+      onResult={(result, error) => {
+        if (!!result) {
+          setData(result?.text);
+          onError(null);
+        }
 
-          if (!!error) {
-            console.log(error);
-          }
-        }}
-        constraints={{ facingMode: 'user' }}
-        style={{ width: '100%' }}
-        {...props}
-      />
-      <p className="text-lg text-center">{data}</p>
-    </>
+        if (!!error) {
+          onError(error);
+        }
+      }}
+      constraints={{ facingMode: 'user' }}
+      className='border border-blue-400'
+      videoContainerStyle={{ border: '1px solid blue'}}
+      videoStyle={{ border: '4px solid green' }}
+      style={{ width: '100%' }}
+      {...props}
+    />
   );
 };
 

@@ -8,6 +8,7 @@ export default function Button({
   icon,
   selected,
   color,
+  disabled,
   size,
   square,
   transparent,
@@ -43,8 +44,9 @@ export default function Button({
           !square && 'px-3',
           sizeClass,
           colorClass,
-          !selected && 'hover:bg-opacity-x1 focus:bg-opacity-x2 active:bg-opacity-x3 cursor-pointer',
-          selected && 'bg-primary text-primary-content bg-opacity-100 cursor-default',
+          !disabled && !selected && 'hover:bg-opacity-x1 focus:bg-opacity-x2 active:bg-opacity-x3 cursor-pointer',
+          !disabled && selected && 'bg-primary text-primary-content bg-opacity-100 cursor-default',
+          disabled && 'text-base-content text-opacity-40 bg-opacity-0 cursor-not-allowed',
           className,
         )
       }

@@ -1,23 +1,28 @@
+import { useState, useEffect } from 'react';
+import { useNavigate } from "react-router-dom";
 import QrReader from '@/components/scan/scanner';
-import { useState } from 'react';
+
 
 export default function Scan() {
   const [data, setData] = useState('No result');
-  const [showQrReader, setShowQrReader] = useState(false);
+  const [error, setError] = useState(null);
+  const navigate = useNavigate()
+  
+  useEffect(() => {
+    if(data && data !== 'No result'){
+      console.log(data);
+      navigate(`/categories/${data}`);
+    }
+  } , [data]);
+
   return (
     <div className="flex justify-center items-center w-full h-full">
-      {!showQrReader ? (
-        <button
-          className="btn btn-primary text-lg font-medium my-5"
-          onClick={() => setShowQrReader(true)}
-        >
-          باز کردن اسکنر
-        </button>
-      ) : (
-        <div className="w-96">
-          <QrReader data={data} setData={setData} />
-        </div>
-      )}
+      <div className="w-96">
+        <QrReader data={data} setData={setData} onError={setError} />
+        { (data === 'No result' || error) &&   
+            <p> آماده اسکن بارکد </p>
+        }
+      </div>
     </div>
   );
 }

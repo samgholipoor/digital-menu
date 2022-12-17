@@ -9,15 +9,17 @@ import Input from '@/components/common/form/Input';
 import File from '@/components/common/form/File';
 import { actionButton } from '@/components/common/ActionButtons';
 import Box from '@/components/common/Box';
+import { useParams } from 'react-router-dom';
 
 export default function CategoryCreate({
   onClose,
   onReloadRequest,
 }) {
+  const { store_id } = useParams();
   const [formData, setFormData] = useState({});
 
   const formAction = useCallback((formData) => {
-    return api.addCategory(formData)
+    return api.addCategory(store_id , formData)
   },[]);
 
   const handleSuccess = useCallback(() => {

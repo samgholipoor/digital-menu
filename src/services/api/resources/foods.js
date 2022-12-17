@@ -1,13 +1,13 @@
 import { createApi } from '../lib';
 
 export const getFoods = createApi({
-  url: 'food',
+  url: 'food/:store_id',
   method: 'get',
   transformResponse: (res) => res.body,
 });
 
 export const addFood = createApi({
-  url: 'food',
+  url: 'food/:store_id',
   method: 'post',
   transformResponse: (res) => res.body,
 });

@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { Outlet, NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { Outlet, NavLink, useLocation, useNavigate, useParams } from 'react-router-dom';
 import routes from '@/admin/index'
 import Layout from '@/layouts/Default';
 import Button from '@/components/common/Button';
@@ -11,22 +11,25 @@ import { generateUrl } from '@/utils/url';
 export default function Admin() {
   const { isDark, toggleTheme } = useTheme();
   const { pathname } = useLocation();
+  const { store_id } = useParams();
   const navigate = useNavigate();
 
   const appLinks = useMemo(
     () => {
-      const createAppLink = (linkTitle, linkIcon, linkTo) => {
+      const createAppLink = (linkTitle, linkIcon, linkTo, isDisabled = false) => {
+        const calcedLinkTo = !isDisabled ? linkTo.replace(':store_id', store_id) : '';
         return {
-          linkTo,
+          linkTo: calcedLinkTo,
           linkTitle,
           linkIcon,
-          isSelected: pathname === linkTo,
+          isSelected: pathname === calcedLinkTo,
+          isDisabled: store_id === 'new' || isDisabled,
         };
       };
       return [
-        createAppLink('My Store', 'storefront_black_24dp', '/admin/store'),
-        createAppLink('Categories', 'menu_book_black_24dp', '/admin/categories'),
-        createAppLink('Foods', 'fastfood_black_24dp', '/admin/foods'),
+        createAppLink('My Store', 'storefront_black_24dp', '/admin/store/:store_id'),
+        createAppLink('Categories', 'menu_book_black_24dp', '/admin/categories/:store_id'),
+        createAppLink('Foods', 'fastfood_black_24dp', '/admin/foods/:store_id'),
       ];
     },
     [location, pathname],
@@ -67,6 +70,7 @@ export default function Admin() {
               <Button
                 key={appLink.linkTitle}
                 selected={appLink.isSelected}
+                disabled={appLink.isDisabled}
                 icon={appLink.linkIcon}
                 component={NavLink}
                 to={appLink.linkTo}

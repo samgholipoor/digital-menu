@@ -12,17 +12,19 @@ import {
 } from '@/components/common/Table';
 import FoodCreate from './foodCreate';
 import apis, { useFetch } from '@/services/api';
+import { useParams } from 'react-router-dom';
 
 export default function Foods() {
+  const { store_id } = useParams();
   const [showModal, setShowModal] = useState();
   const [categories,] = useFetch(
-    () => apis.getCategories(),
+    () => apis.getCategories(store_id),
     [],
     [],
   );
 
   const [foods, , reload] = useFetch(
-    () => apis.getFoods(),
+    () => apis.getFoods(store_id),
     [],
     [],
   );
@@ -108,5 +110,5 @@ export default function Foods() {
 
 Foods.routerConfig = {
   type: 'page',
-  path: 'foods',
+  path: 'foods/:store_id',
 };

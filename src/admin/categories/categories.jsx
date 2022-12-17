@@ -12,11 +12,13 @@ import {
 } from '@/components/common/Table';
 import CategoryCreate from './categoryCreate';
 import apis, { useFetch } from '@/services/api';
+import { useParams } from 'react-router-dom';
 
 export default function Categories() {
+  const { store_id } = useParams();
   const [showModal, setShowModal] = useState();
   const [categories, , reload] = useFetch(
-    () => apis.getCategories(),
+    () => apis.getCategories(store_id),
     [],
     [],
   );
@@ -93,5 +95,5 @@ export default function Categories() {
 
 Categories.routerConfig = {
   type: 'page',   
-  path: 'categories',
+  path: 'categories/:store_id',
 };
