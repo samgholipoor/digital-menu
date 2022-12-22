@@ -6,7 +6,6 @@ import Button from '@/components/common/Button';
 import { useTheme } from '@/services/theme';
 import { removeFromStorage } from '@/utils/storage';
 import { USER_LOCAL_STORAGE_KEY } from '@/constants';
-import { generateUrl } from '@/utils/url';
 
 export default function Admin() {
   const { isDark, toggleTheme } = useTheme();

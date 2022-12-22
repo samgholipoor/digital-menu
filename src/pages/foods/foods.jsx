@@ -1,6 +1,5 @@
 import apis, { useFetch } from '@/services/api';
-import Rater from 'react-rater'
-import Layout from '@/layouts/Default';
+import Layout from '@/layouts/Pages';
 import Cart from '@/components/common/cart';
 import { useParams } from "react-router-dom";
 import { useMemo } from 'react';
@@ -57,7 +56,7 @@ export default function Foods() {
   }, [loading, category, foods]);
 
   return (
-    <Layout >
+    <Layout title={category?.category_name}>
       {render}
     </Layout>
   );

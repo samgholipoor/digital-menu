@@ -16,9 +16,7 @@ const QrCodeReader = ({ setData, onError, props }) => {
         }
       }}
       constraints={{ facingMode: 'user' }}
-      className='border border-blue-400'
-      videoContainerStyle={{ border: '1px solid blue'}}
-      videoStyle={{ border: '4px solid green' }}
+      className=''
       style={{ width: '100%' }}
       {...props}
     />

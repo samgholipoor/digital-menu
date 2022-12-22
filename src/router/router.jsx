@@ -4,6 +4,7 @@ import Error from '@/layouts/Error';
 import { ThemeProvider } from '@/services/theme';
 import { LoadingProvider } from '@/services/loading';
 import { OverlaysProvider } from '@/services/overlay';
+import history from '@/utils/history';
 
 export const UserValidationWrapper = ({ userValidator, children }) => {
   const user = {};
@@ -47,7 +48,7 @@ export function RouterView() {
   );
 
   return (
-    <HashRouter>
+    <HashRouter history={history}>
       <LoadingProvider>
         <ThemeProvider>
           <OverlaysProvider>
