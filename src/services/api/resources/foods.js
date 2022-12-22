@@ -17,3 +17,11 @@ export const removeFood = createApi({
   method: 'delete',
   transformResponse: (res) => res.body,
 });
+
+// client 
+
+export const getCategoryFoods = createApi({
+  url: 'food/:restaurantId/:categoryId/client',
+  method: 'get',
+  transformResponse: (res) => res.body,
+});

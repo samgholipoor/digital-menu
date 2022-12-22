@@ -47,6 +47,8 @@ export default function Categories() {
                 title={category.category_name}
                 description={category.category_description}
                 image={category.category_image}
+                id={category._id}
+                hasButton
               />
             ))}
           </div>  
