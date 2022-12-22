@@ -10,7 +10,6 @@ export default function Scan() {
   
   useEffect(() => {
     if(data && data !== 'No result'){
-      console.log(data);
       navigate(`/categories/${data}`);
     }
   } , [data]);
