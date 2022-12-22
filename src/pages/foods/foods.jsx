@@ -37,7 +37,7 @@ export default function Foods() {
             </div>
           </div>
           <div className='flex flex-col gap-4'>
-            {foods?.map((food) => (
+            {!!foods.length ? foods?.map((food) => (
               <Cart 
                 key={food._id}
                 title={food.food_name}
@@ -45,7 +45,11 @@ export default function Foods() {
                 price={food.food_price}
                 image={food.food_image}
               />
-            ))}
+            )) : 
+            <h2 className='text-center text-xl font-bold text-gray-800 my-4'> 
+              غذایی برای این دسته بندی یافت نشد 
+            </h2>
+          }
           </div>  
         </>
       );

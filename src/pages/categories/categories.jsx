@@ -41,7 +41,7 @@ export default function Categories() {
             </div>
           </div>
           <div className='flex flex-col gap-4'>
-            {items?.map((category) => (
+            {!!items.length ?  items?.map((category) => (
               <Cart 
                 key={category._id}
                 title={category.category_name}
@@ -50,7 +50,11 @@ export default function Categories() {
                 id={category._id}
                 hasButton
               />
-            ))}
+            )) : 
+            <h2 className='text-center text-xl font-bold text-gray-800 my-4'> 
+              کتگوری برای این رستوران یافت نشد 
+            </h2>
+          }
           </div>  
         </>
       );
