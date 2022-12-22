@@ -1,13 +1,13 @@
 const Cart = ({image, title, description}) => {
   return ( 
-    <div className="card card-side bgbae-100 shadow-xl">
+    <div className="bg-base-200 bg-opacity-80 card card-side shadow-md">
       <figure>
-        <img src={`/images/${image}`} alt="Movie" />
+        <img className="h-44 w-44" src={`/images/${image}`} alt="Movie" />
       </figure>
-      <div className="card-body">
+      <div className="card-body" dir="rtl">
         <h2 className="card-title">{title}</h2>
         <p>{description}</p>
-        <div className="card-actions justify-end">
+        <div className="card-actions">
           <button className="btn btn-primary">مشاهده</button>
         </div>
       </div>
